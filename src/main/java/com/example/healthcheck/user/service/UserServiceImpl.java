@@ -4,6 +4,7 @@ import com.example.healthcheck.user.domain.User;
 import com.example.healthcheck.user.repository.UserRepository;
 
 import com.example.healthcheck.user.requestdto.UserCreateRequestDTO;
+import com.example.healthcheck.user.requestdto.UserCreateRequestUpdateDTO;
 import com.example.healthcheck.user.requestdto.UserLoginRequestDTO;
 import com.example.healthcheck.user.requestdto.UserPutRequestDTO;
 import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
@@ -120,13 +121,34 @@ public class UserServiceImpl implements UserService{
         String title = "Travel with me 이메일 인증 번호";
         String authCode = this.createCode();
         emailService.sendEmail(userCreateRequestDTO,title,authCode);
-        /*User user = User.builder()
-                .email(userCreateRequestDTO.getEmail())
-                .isVerified(false)
+        User user = User.builder()
+                .name(userCreateRequestDTO.getName())
+                .emlAuthCd(authCode)
+                .emlAuthYn(false)
                 .build();
 
-        userRepository.save(user);*/
+        userRepository.save(user);
         return null;
+    }
+
+    @Override
+    public String verifyEmailCode(UserCreateRequestUpdateDTO userCreateRequestUpdateDTO) {
+        User user = userRepository.findByName(userCreateRequestUpdateDTO.getName());
+
+        User updateUser;
+        if (Objects.equals(userCreateRequestUpdateDTO.getEmlAuthCd(), user.getEmlAuthCd())) {
+            updateUser = User.builder()
+                    .emlAuthYn(true)
+                    .password(userCreateRequestUpdateDTO.getPassword())
+                    .name(userCreateRequestUpdateDTO.getName())
+                    .build();
+
+
+        } else {
+            throw new RuntimeException("코드 틀림");
+        }
+        userRepository.save(updateUser);
+        return "성공";
     }
 
 

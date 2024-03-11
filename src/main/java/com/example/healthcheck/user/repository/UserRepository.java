@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User,Long> {
-    UserLoginResponseDTO findByName(String name);
+    User findByName(String name);
 
     User findById(UUID userId);
 

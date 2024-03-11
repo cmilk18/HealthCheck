@@ -1,9 +1,6 @@
 package com.example.healthcheck.user.controller;
 
-import com.example.healthcheck.user.requestdto.UserCreateRequestDTO;
-import com.example.healthcheck.user.requestdto.UserGetRequestDTO;
-import com.example.healthcheck.user.requestdto.UserLoginRequestDTO;
-import com.example.healthcheck.user.requestdto.UserPutRequestDTO;
+import com.example.healthcheck.user.requestdto.*;
 import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
 import com.example.healthcheck.user.service.UserService;
 
@@ -103,5 +100,14 @@ public class UserController {
     @PostMapping("/user/verify")
     public String verifyEmail(@RequestBody UserCreateRequestDTO userCreateRequestDTO){
         return userService.verifyEmail(userCreateRequestDTO);
+    }
+
+    @Operation(summary="이메일 검증 2단계", description="이메일로 보낸 검증코드를 확인합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용 가능 합니다."),
+            @ApiResponse(responseCode = "500", description = "이미 사용중 입니다.")})
+    @PostMapping("/user/verify/code")
+    public String verifyEmailCode(@RequestBody UserCreateRequestUpdateDTO userCreateRequestUpdateDTO){
+        return userService.verifyEmailCode(userCreateRequestUpdateDTO);
     }
 }

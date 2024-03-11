@@ -2,11 +2,16 @@ package com.example.healthcheck.user.domain;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -19,36 +24,26 @@ public class User {
 
     private String password;
 
-    public User( String name, String password) {
+    private boolean emlAuthYn;
+
+    private String emlAuthCd;
+    @Builder
+    public User(UUID id, String name, String password, boolean emlAuthYn, String emlAuthCd) {
+        this.id = id;
         this.name = name;
         this.password = password;
+        this.emlAuthYn = emlAuthYn;
+        this.emlAuthCd = emlAuthCd;
     }
+
+
 
     public User() {
 
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public User(String name, String password) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 }

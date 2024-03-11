@@ -1,6 +1,7 @@
 package com.example.healthcheck.user.service;
 
 import com.example.healthcheck.user.requestdto.UserCreateRequestDTO;
+import com.example.healthcheck.user.requestdto.UserCreateRequestUpdateDTO;
 import com.example.healthcheck.user.requestdto.UserLoginRequestDTO;
 import com.example.healthcheck.user.requestdto.UserPutRequestDTO;
 import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
@@ -26,4 +27,6 @@ public interface UserService {
     String loginUsers(UserLoginRequestDTO userLoginRequestDTO);
 
     String verifyEmail(UserCreateRequestDTO userCreateRequestDTO);
+
+    String verifyEmailCode(UserCreateRequestUpdateDTO userCreateRequestUpdateDTO);
 }
