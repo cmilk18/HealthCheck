@@ -95,6 +95,7 @@ public class UserController {
         return userService.loginUsers(userLoginRequestDTO);
     }
 
+    
     @Operation(summary="이메일 검증 1단계", description="이메일로 검증 코드를 보냅니다")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용 가능 합니다."),
