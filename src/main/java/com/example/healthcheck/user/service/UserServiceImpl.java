@@ -11,6 +11,7 @@ import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
 import com.example.healthcheck.user.responsedto.UserLoginResponseDTO;
 import com.example.healthcheck.util.http.HttpResponse;
 import com.example.healthcheck.util.email.EmailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -20,16 +21,12 @@ import java.security.SecureRandom;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
 
     private final EmailService emailService;
-
-    public UserServiceImpl(UserRepository userRepository, EmailService emailService) {
-        this.userRepository = userRepository;
-        this.emailService = emailService;
-    }
 
     @Override
     @Transactional
@@ -107,9 +104,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String loginUsers(UserLoginRequestDTO userLoginRequestDTO) {
-        UserLoginResponseDTO userLoginResponseDTO = userRepository.findByName(userLoginRequestDTO.getName());
-        System.out.println("userLoginResponseDTO = " + userLoginResponseDTO);
-        if(Objects.equals(userLoginResponseDTO.getName(), userLoginRequestDTO.getName())&&Objects.equals(userLoginResponseDTO.getPassword(), userLoginRequestDTO.getPassword())){
+        User user = userRepository.findByName(userLoginRequestDTO.getName());
+        System.out.println("userLoginResponseDTO = " + user);
+        if(Objects.equals(user.getName(), userLoginRequestDTO.getName())&&Objects.equals(user.getPassword(), userLoginRequestDTO.getPassword())){
             return "response.ok";
         }else{
             return "response.fail";
@@ -138,11 +135,12 @@ public class UserServiceImpl implements UserService{
         User updateUser;
         if (Objects.equals(userCreateRequestUpdateDTO.getEmlAuthCd(), user.getEmlAuthCd())) {
             updateUser = User.builder()
+                    .id(user.getId())
                     .emlAuthYn(true)
+                    .emlAuthCd(userCreateRequestUpdateDTO.getEmlAuthCd())
                     .password(userCreateRequestUpdateDTO.getPassword())
                     .name(userCreateRequestUpdateDTO.getName())
                     .build();
-
 
         } else {
             throw new RuntimeException("코드 틀림");
