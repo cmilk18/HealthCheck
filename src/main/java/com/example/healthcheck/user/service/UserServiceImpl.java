@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String verifyEmail(UserCreateRequestDTO userCreateRequestDTO) {
-        String title = "Travel with me 이메일 인증 번호";
+        String title = "메일 인증 번호";
         String authCode = this.createCode();
         emailService.sendEmail(userCreateRequestDTO,title,authCode);
         User user = User.builder()
