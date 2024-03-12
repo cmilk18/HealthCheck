@@ -6,6 +6,7 @@ import com.example.healthcheck.user.requestdto.UserLoginRequestDTO;
 import com.example.healthcheck.user.requestdto.UserPutRequestDTO;
 import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
 import com.example.healthcheck.util.http.HttpResponse;
+import jakarta.mail.MessagingException;
 
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface UserService {
 
     String loginUsers(UserLoginRequestDTO userLoginRequestDTO);
 
-    String verifyEmail(UserCreateRequestDTO userCreateRequestDTO);
+    String verifyEmail(UserCreateRequestDTO userCreateRequestDTO) throws MessagingException;
 
     String verifyEmailCode(UserCreateRequestUpdateDTO userCreateRequestUpdateDTO);
 }

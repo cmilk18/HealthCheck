@@ -11,6 +11,7 @@ import com.example.healthcheck.user.responsedto.UserGetResponseDTO;
 import com.example.healthcheck.user.responsedto.UserLoginResponseDTO;
 import com.example.healthcheck.util.http.HttpResponse;
 import com.example.healthcheck.util.email.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -114,7 +115,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String verifyEmail(UserCreateRequestDTO userCreateRequestDTO) {
+    public String verifyEmail(UserCreateRequestDTO userCreateRequestDTO) throws MessagingException {
         String title = "메일 인증 번호";
         String authCode = this.createCode();
         emailService.sendEmail(userCreateRequestDTO,title,authCode);

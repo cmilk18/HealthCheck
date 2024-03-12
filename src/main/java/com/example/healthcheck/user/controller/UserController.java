@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,7 +97,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "사용 가능 합니다."),
             @ApiResponse(responseCode = "500", description = "이미 사용중 입니다.")})
     @PostMapping("/user/verify")
-    public String verifyEmail(@RequestBody UserCreateRequestDTO userCreateRequestDTO){
+    public String verifyEmail(@RequestBody UserCreateRequestDTO userCreateRequestDTO) throws MessagingException {
         return userService.verifyEmail(userCreateRequestDTO);
     }
 
